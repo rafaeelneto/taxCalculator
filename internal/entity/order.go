@@ -2,7 +2,6 @@ package entity
 
 import (
 	"errors"
-	"fmt"
 )
 
 type Order struct {
