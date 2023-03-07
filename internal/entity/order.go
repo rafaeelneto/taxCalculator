@@ -1,6 +1,9 @@
 package entity
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 type Order struct {
 	ID string
@@ -12,7 +15,7 @@ type Order struct {
 
 func NewOrder (id string, price float64, tax float64, quantity int) (*Order, error){
 
-	order := &Order{ID: id, Price: price, Tax: tax, Quantity: quantity, FinalPrice: price*float64(quantity)*tax}
+	order := &Order{ID: id, Price: price, Tax: tax, Quantity: quantity, FinalPrice: (price+tax)*float64(quantity)}
 
 	err := order.Validate();
 
@@ -21,9 +24,7 @@ func NewOrder (id string, price float64, tax float64, quantity int) (*Order, err
 		
 	}
 
-	return order, nil
-
-
+	return order, nil;
 }
 
 func (o *Order) Validate() error {
@@ -36,7 +37,6 @@ func (o *Order) Validate() error {
 			return errors.New("Tax is required")
 		case o.Quantity <= 0:
 			return errors.New("Quantity is required")
-
 	}
 
 	return nil // null
