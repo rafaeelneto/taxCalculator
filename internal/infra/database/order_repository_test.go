@@ -6,6 +6,8 @@ import (
 
 	"github.com/rafaeelneto/taxCalculator/internal/entity"
 	"github.com/stretchr/testify/suite"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type OrderRepositoryTestSuite struct {
@@ -19,7 +21,13 @@ func (suite *OrderRepositoryTestSuite) SetupSuite() {
 	suite.NoError(err)
 
 	// create table query
-	db.Exec("CREATE TABLE orders (id (varchar(255) NOT NULL, price float NOT NULL, tax float NOT NULL, quantity int NOT NULL, final_price NOT NULL, PRIMARY KEY (id))")
+	db.Exec(`CREATE TABLE orders 
+	(id (varchar(255) NOT NULL,
+	 price FLOAT NOT NULL,
+	 tax FLOAT NOT NULL,
+	 quantity INTEGER NOT NULL,
+	 final_price NOT NULL,
+	 PRIMARY KEY (id))`)
 	suite.Db = db
 }
 
